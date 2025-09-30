@@ -1,44 +1,32 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import UserList from "./UserList";
-import AddUser from "./AddUser";
+import React from "react";
+import { Link } from "react-router-dom";
 
 const Home = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    setLoading(true)
-    axios.get("http://127.0.0.1:8000/users")
-      .then(response => {
-        setUsers(response.data)
-      })
-    setLoading(false)
-  }, [])
-
-  const deleteUser = (id) => {
-    axios.delete(`http://127.0.0.1:8000/users/${id}`).then((response) => {
-      const newUser = users.filter((user) => user.id !== id);
-      console.log(response)
-      setUsers(newUser);
-    }).catch(error => {
-      console.log(error)
-    });
-  }
-
   return (
-    <div className="max-w-xl pb-8 mx-auto px-5 bg-slate-100">
-      <UserList
-        users={users}
-        loading={loading}
-        deleteUser={deleteUser}
-      />
-      <AddUser
-        users={users}
-        setUsers={setUsers}
-      />
+    <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="bg-white shadow-lg rounded-lg p-12 text-center bg-[url('https://www.transparenttextures.com/patterns/paper.png')]">
+        <h1 className="text-5xl font-bold text-gray-800 mb-6">Sistema de Gestión</h1>
+        <p className="text-gray-600 mb-10">Elija una sección para administrar</p>
+        <div className="flex justify-center space-x-6">
+          <Link to="/login">
+            <button className="w-48 bg-gray-500 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+              Login
+            </button>
+          </Link>
+          <Link to="/users">
+            <button className="w-48 bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+              Administrar Usuarios
+            </button>
+          </Link>
+          <Link to="/products">
+            <button className="w-48 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md transform hover:scale-105 transition-transform duration-300">
+              Administrar Productos
+            </button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default Home;

@@ -14,7 +14,7 @@ def create_app():
     JWTManager(app)
 
     # Habilitar CORS para todas las rutas y todos los orígenes (incluye métodos POST, DELETE, etc.)
-    CORS(app, resources={r"/*": {"origins": "*"}})
+    CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
     # Registrar Blueprints
     app.register_blueprint(auth_bp)
